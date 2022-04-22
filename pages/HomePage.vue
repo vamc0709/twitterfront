@@ -68,7 +68,7 @@ export default {
       console.log('dispatching ' + id)
       this.$store.dispatch('getTweet', id)
       this.$router.push('tweetpage/' + id)
-      await this.$store.dispatch('GetAllCommentsForTweet', id)
+      await this.$store.dispatch('getComments', id)
     },
 
     moveToCreatePost() {

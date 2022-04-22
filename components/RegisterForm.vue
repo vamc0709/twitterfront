@@ -56,6 +56,14 @@
 
 <script>
 export default {
+  data(){
+    return {
+      username: '',
+      email: '',
+      password: '',
+    }
+  },
+  
   methods: {
     async register() {
       await this.$store.dispatch('registerUser', {

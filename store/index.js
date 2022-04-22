@@ -5,7 +5,7 @@ const state = () => ({
     username: null,
     is_register: false,
     tweets: [],
-    current_comments: [],
+    comments: [],
     tweet: [],
     
 })
@@ -62,6 +62,10 @@ const mutations = {
     //         return item.comment_id != comment_id
     //     });
     // },
+    allCommentsForTweet(state, data) {
+        state.comments = data;
+        console.log(" comments are : " + state.comments);
+    },
         setComments(state, data) {
             console.log("comments" + data)
             state.current_comments = data
@@ -238,12 +242,12 @@ const actions = {
         commit('setCurrentTweet', res.data)
     },
 
-    async GetAllCommentsForTweet({ commit, state },tweet_id) {
+    async getComments({ commit, state }, data) {
         // console.log("store called" + $id);
 
-        const res = await this.$axios.get('comment/' + tweet_id)
+        const res = await this.$axios.get('comment/' + data);
         console.log(res.data)
-        commit('setComments', res.data)
+        commit('allCommentsForTweet', res.data)
 
     },
     async updateTweet({ commit, state }, data) {
