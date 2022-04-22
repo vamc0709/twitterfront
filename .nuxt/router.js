@@ -7,7 +7,7 @@ import scrollBehavior from './router.scrollBehavior.js'
 const _4669a914 = () => interopDefault(import('..\\pages\\CreatePost.vue' /* webpackChunkName: "pages/CreatePost" */))
 const _31108748 = () => interopDefault(import('..\\pages\\HomePage.vue' /* webpackChunkName: "pages/HomePage" */))
 const _533930e4 = () => interopDefault(import('..\\pages\\ProfilePage.vue' /* webpackChunkName: "pages/ProfilePage" */))
-const _744386cb = () => interopDefault(import('..\\pages\\idd\\_id.vue' /* webpackChunkName: "pages/idd/_id" */))
+const _2c960d54 = () => interopDefault(import('..\\pages\\tweetpage\\_id.vue' /* webpackChunkName: "pages/tweetpage/_id" */))
 const _73ebae28 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
@@ -34,9 +34,9 @@ export const routerOptions = {
     component: _533930e4,
     name: "ProfilePage"
   }, {
-    path: "/idd/:id?",
-    component: _744386cb,
-    name: "idd-id"
+    path: "/tweetpage/:id?",
+    component: _2c960d54,
+    name: "tweetpage-id"
   }, {
     path: "/",
     component: _73ebae28,

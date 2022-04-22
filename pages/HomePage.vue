@@ -66,7 +66,8 @@ export default {
 
     async moveToTweetPage(id) {
       console.log('dispatching ' + id)
-      this.$router.push('/idd/' + id)
+      this.$store.dispatch('getTweet', id)
+      this.$router.push('tweetpage/' + id)
       await this.$store.dispatch('GetAllCommentsForTweet', id)
     },
 

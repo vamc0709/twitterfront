@@ -5,7 +5,6 @@ const state = () => ({
     username: null,
     is_register: false,
     tweets: [],
-    current_tweet: null,
     current_comments: [],
     tweet: [],
     
@@ -40,44 +39,37 @@ const mutations = {
         this.$router.push('/HomePage')
     },
 
-    setComments(state, data) {
-        console.log("comments" + data)
-        state.current_comments = data
-        console.log("after set" + state.current_comments)
-    },
     setCurrentTweet(state, data) {
-        state.current_tweet = data
+        state.tweet = data
     },
-
-    createdNewComment(state, data) {
-        state.current_comments = state.data
-    },
+    
     deleteTweet(state, tweet_id) {
         state.tweets = state.tweets.filter(function (item) {
             console.log(" to check : " + item.tweet_id + "  with " + tweet_id);
             return item.tweet_id != tweet_id
         });
     },
-    deleteComment(state, comment_id) {
-        state.current_comments = state.current_comments.filter(function (item) {
-            console.log(" to check : " + item.comment_id + "  with " + comment_id);
-            return item.comment_id != comment_id
-        });
-    },
-
     updateTweet(state, data) {
-        const index = state.tweets.findIndex(tweet => tweet.tweet_id === data.tweet_id)
-        console.log(" required index is : " + index);
-        console.log(" tweet in index " + index + " is " + state.tweets[index]);
-        state.tweets[index].title = data.title
-        state.current_tweet.title = data.title
-    }
-
-    // updateTodo(state, data) {
-    //     const index = state.todos.findIndex(todo => todo.id === data.id)
-    //     state.todos[index].title = data.title
-    //     state.todos[index].is_complete = data.is_complete
-    // }
+        // const index = state.tweets.findIndex(tweet => tweet.tweet_id === data.tweet_id)
+        // console.log(" required index is : " + index);
+        // console.log(" tweet in index " + index + " is " + state.tweet[index]);
+        // state.tweets[index].title = data.title
+        state.tweet.title = data
+    },
+    // deleteComment(state, comment_id) {
+    //     state.current_comments = state.current_comments.filter(function (item) {
+    //         console.log(" to check : " + item.comment_id + "  with " + comment_id);
+    //         return item.comment_id != comment_id
+    //     });
+    // },
+        setComments(state, data) {
+            console.log("comments" + data)
+            state.current_comments = data
+            console.log("after set" + state.current_comments)
+    },
+            createdNewComment(state, data) {
+                state.current_comments = state.data
+                this.$router.push('/HomePage')} 
 }
 
 const actions = {
@@ -151,16 +143,12 @@ const actions = {
         const res = await this.$axios.post('tweet', data)
         commit('createdNewTweet', res.data)
     },
-    async addComment({ commit, state }, data) {
-        const res = await this.$axios.post('comment', data)
-        commit('createdNewPost', res.data)
-      },
-
-      async deleteTweet({ commit }, tweet_id) {
+    
+    async deleteTweet({ commit }, tweet_id) {
         try {
             var res = await this.$axios.delete('tweet/' + tweet_id)
             if (res.status == 204) {
-
+                
                 commit('deleteTweet', tweet_id)
                 this.$router.push('/HomePage')
             } else {
@@ -170,18 +158,39 @@ const actions = {
             if (e.response.status == 403) {
                 alert(" You cannot delete others' tweet")
             } else {
-
+                
                 alert(" error!  " + e.response.status)
             }
-
+            
         }
+        
+    },
 
+
+    //COMMENT
+    async addComment({ commit, state }, data) {            
+        const res = await this.$axios.post('comment/', data)
+        commit('createdNewComment', res.data)
     },
     async deleteComment({ commit, state }, comment_id) {
         const res = await this.$axios.delete('comment/'+ comment_id,)
-        // commit('createdNewPost', res.data)
+        commit('createdNewPost', res.data) 
+
+
+    },
+    async getTweet({commit,state}, data){
+        const res = await this.$axios.get('tweet/' + data)
+        commit('setCurrentTweet', res.data)
+    },
+              
+        
+        
+        
+        //COMMENT
     
     //   async deleteComment({ commit, state }, comment_id) {
+
+
     //     try {
     //         var res = await this.$axios.delete('comment/' + comment_id)
     //         if (res.status == 204) {
@@ -201,7 +210,7 @@ const actions = {
     //     }
         // const res = await this.$axios.delete('comment/'+ comment_id,)
         // commit('createdNewPost', res.data)
-    },
+    // },
 
     async updateProfile({state}, data) {
         try {
@@ -237,30 +246,25 @@ const actions = {
         commit('setComments', res.data)
 
     },
-    async updateTweet({ commit }, data) {
-        console.log("data is not found" + data.tweet_id)
-        var res = await this.$axios
-            .put(
-                'tweet/' + data.tweet_id,
-                { title: data.title },
+    async updateTweet({ commit, state }, data) {
+        console.log("sds"+state.tweet.tweet_id)
+
+        var res = await this.$axios.put('tweet/' + state.tweet.tweet_id ,
+                { title: data.title }
 
             );
 
 
-        if (res.status == 200 || res.status == 204) {
-            console.log(res)
-            console.log('called')
-            commit("updateTweet", data)
-            return true;
-        } else {
-            return false;
-        }
+        // if (res.status == 200 || res.status == 204) {
+        //     console.log(res)
+        //     console.log('called')
+        //     // commit("updateTweet", data)
+        //     return true;
+        // } else {
+        //     return false;
+        // }
 
 
-    },
-    async addComment({ commit, state }, data) {
-        const res = await this.$axios.post('comment/', data)
-        commit('createdNewComment', res.data)
     }
 
 

@@ -21,11 +21,11 @@
     "_name": "_533930e4"
   },
   {
-    "name": "idd-id",
-    "path": "/idd/:id?",
-    "component": "C:\\\\Users\\\\NSPIRA\\\\Desktop\\\\twitter-UI\\\\pages\\\\idd\\\\_id.vue",
-    "chunkName": "pages/idd/_id",
-    "_name": "_744386cb"
+    "name": "tweetpage-id",
+    "path": "/tweetpage/:id?",
+    "component": "C:\\\\Users\\\\NSPIRA\\\\Desktop\\\\twitter-UI\\\\pages\\\\tweetpage\\\\_id.vue",
+    "chunkName": "pages/tweetpage/_id",
+    "_name": "_2c960d54"
   },
   {
     "name": "index",

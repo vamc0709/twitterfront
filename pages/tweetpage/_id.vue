@@ -12,24 +12,24 @@
             <input type="text" v-model="title" />
           </p>
         </div>
-        <h1 v-else>{{ Post_title }}</h1>
-        <div class="btns" v-if="post_user_id == user_id">
-          <button v-if="!isUpdating" class="btn" @click="updateTweet">
+        <h1 v-else>{{ tweet.title }}</h1>
+        <div class="btns" v-if="tweet.user_id == user_id">
+          <button  class="btn" v-if="!isUpdating" @click="updateTweet">
             Update
           </button>
           <button
             v-if="!isUpdating"
             class="btn-danger"
-            @click="deletePost(tweet.id)"
+            @click="deleteTweet(tweet.tweet_id)"
           >
             Delete
           </button>
-          <button class="button" v-else @click="submitPost">Submit</button>
+          <button class="button" v-else @click="submitTweet">Submit</button>
         </div>
       </div>
       <div>
       </div>
-    </div> 
+    </div>
     <div class="form-group">
       <label for="exampleFormControlTextarea1">Comment here</label>
       <textarea
@@ -69,17 +69,19 @@ import { mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapState(['current_comments', 'tweet','Post_title','post_user_id','user_id']),
+    ...mapState(['current_comments', 'tweet','title','tweet_user_id','user_id']),
   },
   data() {
     return {
       isUpdating: false,
       newPostText: '',
       title: '',
+      newComment: '',
+      
     }
   },
   methods: {
-
+              // check
     async deleteComment(comment_id) {
       await this.$store.dispatch('deleteComment', comment_id)
     },
@@ -90,21 +92,24 @@ export default {
         text: this.newComment,
         tweet_id: this.$route.params.id,
       })
+              // check
+
+
       // calling here. see?
       await this.$store.dispatch('GetAllTweets')
     },
-   updatePost() {
+   updateTweet() {
       this.isUpdating = true
-      // this.title = this.tweet.title
+      this.title = this.tweet.title
     },
-    async submitPost() {
+    async submitTweet() {
       this.isUpdating = false
-      await this.$store.dispatch('updatePost', this.title)
-      this.$store.commit('updatePost', this.title)
+      await this.$store.dispatch('updateTweet', this.title)
+      this.$store.commit('updateTweet', this.title)
     },
-    async deletePost(id) {
-      await this.$store.dispatch('deletePost', id)
-      this.$router.push('/UserHome')
+    async deleteTweet(tweet_id) {
+      await this.$store.dispatch('deleteTweet', tweet_id)
+      this.$router.push('/HomePage')
     },
   },
 
